@@ -4,6 +4,7 @@ using System.Text;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using oSport.Models;
 
 namespace oSport.Data
 {
@@ -22,8 +23,9 @@ namespace oSport.Data
                 .HasData(
                 new IdentityRole
                 {
+
                     Name = "League Admin",
-                    NormalizedName = "LEAGUE Admin",
+                    NormalizedName = "LEAGUE ADMIN",
                 },
                 new IdentityRole
                 {
@@ -41,6 +43,43 @@ namespace oSport.Data
                     NormalizedName = "PLAYER",
                 }
                 );
+            builder.Entity<Sport>()
+                .HasData(
+                new Sport
+                {
+                    Id = 1,
+                    Name = "Soccer"
+                },
+                new Sport
+                {
+                    Id = 2,
+                    Name = "Football"
+                },
+                new Sport
+                {
+                    Id = 3,
+                    Name = "Basketball"
+                },
+                new Sport
+                {
+                    Id = 4,
+                    Name = "Hockey"
+                },
+                new Sport
+                {
+                    Id = 5,
+                    Name = "Rugby"
+                }
+                );
+
         }
+
+
+        public DbSet<LeagueAdmin> LeagueAdmins { get; set; }
+        public DbSet<Coach> Coaches { get; set; }
+        public DbSet<Referee> Referees { get; set; }
+        public DbSet<Player> Players { get; set; }
+        public DbSet<Sport> Sports { get; set; }
+        public DbSet<League> Leagues { get; set; }
     }
 }

@@ -82,6 +82,7 @@ namespace oSport.Areas.Identity.Pages.Account
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
+            string registerRoute = "/Create";
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
@@ -92,6 +93,7 @@ namespace oSport.Areas.Identity.Pages.Account
                     if(await _roleManager.RoleExistsAsync(Input.Role))
                     {
                         await _userManager.AddToRoleAsync(user, Input.Role);
+                        
                     }
                     _logger.LogInformation("User created a new account with password.");
 
@@ -110,9 +112,32 @@ namespace oSport.Areas.Identity.Pages.Account
                     {
                         return RedirectToPage("RegisterConfirmation", new { email = Input.Email });
                     }
-                    else
+                    else if(Input.Role == ("League Admin"))
                     {
                         await _signInManager.SignInAsync(user, isPersistent: false);
+                        returnUrl += "LeagueAdmins" + registerRoute;
+                        return LocalRedirect(returnUrl);
+                    }
+                    else if (Input.Role == ("Coach"))
+                    {
+                        await _signInManager.SignInAsync(user, isPersistent: false);
+                        returnUrl += "Coaches" + registerRoute;
+                        return LocalRedirect(returnUrl);
+                    }
+                    else if (Input.Role == ("Referee"))
+                    {
+                        await _signInManager.SignInAsync(user, isPersistent: false);
+                        returnUrl += "Referees" + registerRoute;
+                        return LocalRedirect(returnUrl);
+                    }
+                    else if (Input.Role == ("Player"))
+                    {
+                        await _signInManager.SignInAsync(user, isPersistent: false);
+                        returnUrl += "Players" + registerRoute;
+                        return LocalRedirect(returnUrl);
+                    }
+                    else
+                    {
                         return LocalRedirect(returnUrl);
                     }
                 }

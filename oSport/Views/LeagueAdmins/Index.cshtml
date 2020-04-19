@@ -1,0 +1,53 @@
+﻿@model oSport.Models.LeagueAdmin
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-lg-6">
+        <h1>Welcome @Model.FirstName @Model.LastName ,</h1>
+    </div>
+    <div class="col-lg-6">
+
+
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                       League Name
+                    </th>
+                    <th>
+                        Sport
+                    </th>
+                    <th>
+                        <button type="button" onclick="location.href='@Url.Action("Create", "Leagues")'" class="btn btn-primary">Create League</button>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(var item in ViewBag.Leagues)
+                {
+                    <tr>
+                        <td>
+                            @item.LeagueName
+                        </td>
+                        <td>
+                            @item.Sport.Name
+                        </td>  
+                        <td>
+                            <button type="button" onclick="location.href='@Url.Action("Details", "Leagues", new { id = item.Id })'" class="btn btn-primary">Details</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+

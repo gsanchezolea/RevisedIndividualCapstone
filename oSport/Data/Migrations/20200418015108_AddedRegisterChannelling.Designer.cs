@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using oSport.Data;
 
 namespace oSport.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200418015108_AddedRegisterChannelling")]
+    partial class AddedRegisterChannelling
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -48,29 +50,29 @@ namespace oSport.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "6055c0fd-f3e0-495f-b2e5-92d3c62d0089",
-                            ConcurrencyStamp = "0366f1e1-8d09-4819-b1d6-2e445141213d",
+                            Id = "9a74645a-d547-48d7-ae02-03d4016fc07f",
+                            ConcurrencyStamp = "f4fe7379-2b98-4f86-8e1a-a18111f2eae9",
                             Name = "League Admin",
-                            NormalizedName = "LEAGUE ADMIN"
+                            NormalizedName = "LEAGUE Admin"
                         },
                         new
                         {
-                            Id = "ec1ab161-07ef-4286-aef0-3be96091f41f",
-                            ConcurrencyStamp = "b69934b8-61de-4e8d-8cdf-97d563bf50c3",
+                            Id = "b4e4067a-da36-4aa5-a995-18bfc928d09e",
+                            ConcurrencyStamp = "d5532a65-6618-4d44-9325-8a22bd36aee9",
                             Name = "Coach",
                             NormalizedName = "COACH"
                         },
                         new
                         {
-                            Id = "3ac388b1-e610-47a4-9659-1543bb97a1a3",
-                            ConcurrencyStamp = "008dcaca-7981-456f-a4a3-c03a84cc7bde",
+                            Id = "a5896bd2-7add-454a-8fec-aabd0e7f0084",
+                            ConcurrencyStamp = "ed65b110-7984-4165-a8a7-1e658e343bef",
                             Name = "Referee",
                             NormalizedName = "REFEREE"
                         },
                         new
                         {
-                            Id = "8c399974-2a83-4e79-b1a2-3112e5f35be7",
-                            ConcurrencyStamp = "e502e666-baf2-44d6-97c5-8f63b85ff723",
+                            Id = "f03c11ea-80f9-4bf1-bf2f-cd1fa4c1ca73",
+                            ConcurrencyStamp = "91c8e525-6ed5-404d-8740-1870158d633b",
                             Name = "Player",
                             NormalizedName = "PLAYER"
                         });
@@ -274,36 +276,7 @@ namespace oSport.Data.Migrations
                     b.ToTable("Coaches");
                 });
 
-            modelBuilder.Entity("oSport.Models.League", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("LeagueAdminId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("LeagueName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("SportId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TeamCapacity")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("LeagueAdminId");
-
-                    b.HasIndex("SportId");
-
-                    b.ToTable("Leagues");
-                });
-
-            modelBuilder.Entity("oSport.Models.LeagueAdmin", b =>
+            modelBuilder.Entity("oSport.Models.League_Admin", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -329,7 +302,7 @@ namespace oSport.Data.Migrations
 
                     b.HasIndex("IdentityUserId");
 
-                    b.ToTable("LeagueAdmins");
+                    b.ToTable("League_Admins");
                 });
 
             modelBuilder.Entity("oSport.Models.Player", b =>
@@ -390,49 +363,6 @@ namespace oSport.Data.Migrations
                     b.ToTable("Referees");
                 });
 
-            modelBuilder.Entity("oSport.Models.Sport", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Sports");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Soccer"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Football"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Basketball"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Hockey"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "Rugby"
-                        });
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -491,22 +421,7 @@ namespace oSport.Data.Migrations
                         .HasForeignKey("IdentityUserId");
                 });
 
-            modelBuilder.Entity("oSport.Models.League", b =>
-                {
-                    b.HasOne("oSport.Models.LeagueAdmin", "LeagueAdmin")
-                        .WithMany()
-                        .HasForeignKey("LeagueAdminId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("oSport.Models.Sport", "Sport")
-                        .WithMany()
-                        .HasForeignKey("SportId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("oSport.Models.LeagueAdmin", b =>
+            modelBuilder.Entity("oSport.Models.League_Admin", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
                         .WithMany()
